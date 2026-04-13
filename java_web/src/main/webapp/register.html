@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户注册</title>
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+<div class="form-container">
+<!--    <form action="#" method="post">-->
+    <form action="/hello-servlet" method="post">
+        <div class="form-row">
+            <label for="username">用户名：</label>
+            <input type="text" id="username" name="username">
+        </div>
+
+        <div class="form-row">
+            <label for="password">密码：</label>
+            <input type="password" id="password" name="password">
+        </div>
+
+        <div class="form-row">
+            <label for="confirm-password">确认密码：</label>
+            <input type="password" id="confirm-password" name="confirmPassword">
+        </div>
+
+        <div class="form-row">
+            <label>性别：</label>
+            <div class="radio-group">
+                <input type="radio" id="male" name="gender" value="男" checked>
+                <label for="male">男</label>
+                <input type="radio" id="female" name="gender" value="女">
+                <label for="female">女</label>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <label for="subject">科目：</label>
+            <select id="subject" name="subject">
+                <option value="java">Java</option>
+                <option value="python">Python</option>
+                <option value="c">C</option>
+                <option value="javascript">JavaScript</option>
+            </select>
+        </div>
+
+        <div class="form-row">
+            <label>爱好：</label>
+            <div class="checkbox-group">
+                <input type="checkbox" id="coding" name="hobby" value="coding">
+                <label for="coding">编程</label>
+                <input type="checkbox" id="swimming" name="hobby" value="swimming">
+                <label for="swimming">游泳</label>
+                <input type="checkbox" id="singing" name="hobby" value="singing">
+                <label for="singing">唱歌</label>
+                <input type="checkbox" id="drawing" name="hobby" value="drawing">
+                <label for="drawing">画画</label>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <button type="submit" class="submit-btn">提交</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
