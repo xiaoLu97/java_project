@@ -12,3 +12,9 @@ ResultSet 接口：接收结果集
 - https://cloud.tencent.com/developer/article/2163414
 
 导入后就看到jar的源码
+
+# C3P0
+C3P0 需要两个 jar 包才能正常工作：
+
+- https://www.mchange.com/projects/c3p0/ 官方文档Installation
+- https://repo1.maven.org/maven2/com/mchange/mchange-commons-java/
