@@ -19,7 +19,7 @@ public class Utils {
         Person person = queryRunner.query(connection, sql, new BeanHandler<>(Person.class), 2);
         System.out.println(person);*/
         // jdbc的任务：拿到resultSet
-        // BeanHandler的任务：转成Person对象： rsh.handle(rs);
+        // BeanHandler的任务：转成Person对象： rsh.handle(rs); 通过泛型决定返回值
         // BeanProcessor： 1. 构建对象this.newInstance(type) 反射 2. 给属性赋值，匹配不上则不处理
 
         // 查询集合
