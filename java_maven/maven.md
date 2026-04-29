@@ -59,3 +59,11 @@ IoC 创建对象，只需要在配置文件中设置你要创建的对象即可
 注意：@component和@Bean都是创建Bean对象到IoC容器，
 
 所以方法三和方法二可以互通（前提：只能通过包的方式构造，AnnotationConfigApplicationContext的入参）
+
+## AOP 面向切面编程
+
+AOP 是对 OOP 的一种补充，是在另外一个纬度上抽象出对象，具体是指程序运行时动态将非业务切入到业务代码中，实现了业务代码和非业务代码的解耦合。
+
+非业务代码：日志
+
+IOC容器会把业务对象(CalImpl)和切面对象(LoggerAspect)通过注解(@EnableAspectJAutoProxy)生成动态代理对象
