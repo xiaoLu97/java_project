@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mvc.mapper.SupplierMapper">
+
+    <!--<select id="get" parameterType="com.mvc.entity.Supplier" resultType="com.mvc.entity.Supplier">
+        select * from Supplier where id = #{id} and username = #{username} and password = #{password} and age = #{age}
+    </select>-->
+
+    <select id="get" parameterType="com.mvc.entity.Supplier" resultType="com.mvc.entity.Supplier">
+        select * from supplier
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+            <!-- id为空会删除掉where紧跟的and -->
+            <if test="username != null">
+                and username = #{username}
+            </if>
+            <if test="password != null">
+                and password = #{password}
+            </if>
+            <if test="age != null">
+                and age = #{age}
+            </if>
+        </where>
+    </select>
+
+</mapper>
