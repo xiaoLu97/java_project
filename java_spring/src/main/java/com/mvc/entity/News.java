@@ -10,4 +10,5 @@ public class News {
     private String content;
     private Date createtime;
     private String opername;
+    private String time;
 }

@@ -6,4 +6,16 @@
         insert into news(title,content,createtime,opername) values(#{title},#{content},#{createtime},#{opername})
     </insert>
 
+    <update id="update" parameterType="com.mvc.entity.News">
+        update news set title = #{title},content = #{content},opername = #{opername} where id = #{id}
+    </update>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from news where id = #{id}
+    </delete>
+
+    <select id="getById" parameterType="java.lang.Integer" resultType="com.mvc.entity.News">
+        select * from news where id = #{id}
+    </select>
+
 </mapper>
