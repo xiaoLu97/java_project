@@ -47,7 +47,7 @@ Spring Boot + Spring MVC + MyBatis
 
 ## Thymeleaf 前端模板，HTML
 
-不能直接通过 url 来访问 templates 路径下的资源，Thymeleaf 模板必须经过 Controller 才能加载
+**不能直接通过 url 来访问 templates 路径下的资源**，Thymeleaf 模板必须经过 Controller 才能加载
 
 url -》Controller -》Thymeleaf
 ```
@@ -176,3 +176,144 @@ MyBatis Plus 逆向工程的依赖
     <version>1.7</version>
 </dependency>
 ```
+
+# Spring Boot 整合 JdbcTemplate
+
+Spring 自带的 JDBC 模板组件，底层实现了对 JDBC 的封装，需要开发者自定义 SQL 语句，JdbcTemplate 帮助我们完成数据库的连接，SQL 的执行，结果集的封装。
+
+JdbcTemplate 提供了通用的 SQL 操作方法，execute、update、batchUpdate、query
+
+JdbcTemplate 和 MyBatis 的区别？
+
+MyBatis 的 SQL 定义在 XML 文件中，JdbcTemplate 的 SQL 定义在 Java 类中
+
+```java
+package com.southwind.controller;
+
+import com.southwind.entity.News;
+import com.southwind.jdbctemplate.NewsMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/news")
+public class NewsController {
+
+    @Autowired
+    private NewsMapper newsMapper;
+
+    @GetMapping("/list")
+    public List<News> list(){
+        return this.newsMapper.list();
+    }
+
+    @GetMapping("/getById/{id}")
+    public News getById(@PathVariable("id") Integer id){
+        News news = null;
+        try {
+            news = this.newsMapper.getById(id);
+        } catch (Exception e) {
+            return null;
+        }
+        return news;
+    }
+
+    @PostMapping("/add")
+    public void add(@RequestBody News news){
+        this.newsMapper.add(news);
+    }
+
+    @PutMapping("/update")
+    public void update(@RequestBody News news){
+        this.newsMapper.update(news);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public void delete(@PathVariable("id") Integer id){
+        this.newsMapper.deleteById(id);
+    }
+
+    @GetMapping("/batchAdd")
+    public void batchAdd(){
+        this.newsMapper.batchAdd();
+    }
+
+    @GetMapping("/batchUpdate")
+    public void batchUpdate(){
+        this.newsMapper.batchUpdate();
+    }
+
+    @GetMapping("/batchDelete")
+    public void batchDelete(){
+        this.newsMapper.batchDelete();
+    }
+
+}
+```
+
+# Spring Boot 整合 Spring Data JPA
+
+Spring Data JPA 是 Spring 框架提供的持久层解决方案
+
+实体类
+
+```java
+package com.southwind.jpaentity;
+import lombok.Data;
+
+import javax.persistence.*;
+import java.util.Date;
+
+@Data
+@Entity
+public class News {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    @Column
+    private String title;
+    @Column
+    private String content;
+    @Column
+    private Date createtime;
+    @Column
+    private String opername;
+}
+```
+
+# Spring Boot 整合 Spring Security
+
+Spring Security、Shiro 安全框架，对请求进行校验。
+
+
+## Spring Security
+
+安装了依赖后，内置了一个登录页面
+
+除了最基本的登录认证，还可以使用 Spring Security 来完成资源权限管理：当请求某个资源时，对角色进行验证，如果该角色拥有访问权限则正常访问，否则无法访问。
+
+角色：ADMIN、USER
+
+ADMIN 可以访问 welcome.html 和 admin.html
+
+USER 只能访问 welcome.html，否则403 Forbidden
+
+### 遇到问题：
+
+不打开控制台能正确跳回/admin，打开就不正常跳到/.well-known/appspecific/com.chrome.devtools.json
+
+当 Chrome DevTools 处于打开状态，并且您正在浏览从 localhost 提供的网站时，它会自动向以下地址发送请求  GET /.well-known/appspecific/com.chrome.devtools.json
+
+在 Spring Security 配置里放行这个路径
+
+## CSRF（Cross-Site Request Forgery，跨站请求伪造）
+
+是一种常见的 Web 安全攻击方式。
+- 用户登录了你的银行网站 bank.com，浏览器保存了会话 Cookie
+- 用户没有退出登录，又访问了恶意网站 evil.com
+- 恶意网站上有一个隐藏的表单或图片链接：
+- 浏览器会自动带上 bank.com 的 Cookie 发送请求
+- 银行网站以为是用户自己在操作，执行了转账
+- 核心问题： 浏览器会自动携带 Cookie，服务器无法区分这个请求是用户主动发起的，还是被恶意网站伪造的。
