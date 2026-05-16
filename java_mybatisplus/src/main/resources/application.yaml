@@ -2,7 +2,7 @@ server:
   port: 8181
 spring:
   application:
-    name: java_boot
+    name: java_mybatisplus
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/jdbc_test
